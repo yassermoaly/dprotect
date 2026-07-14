@@ -1,0 +1,993 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>DProtect - Secure Identity. Trusted Protection.</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0a0f1e;
+      --panel: #0d1530;
+      --panel-2: #101a38;
+      --line: #1e2a45;
+      --muted: #94a3b8;
+      --soft: #b7cff0;
+      --text: #f8fafc;
+      --green: #00e676;
+      --green-2: #00c965;
+      --max: 1340px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.55;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    button, input, textarea { font: inherit; }
+
+    .grid-bg {
+      background-image:
+        radial-gradient(circle at 50% 50%, rgba(0, 230, 118, .08) 0 1px, transparent 1px),
+        linear-gradient(rgba(0, 230, 118, .035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 230, 118, .035) 1px, transparent 1px);
+      background-size: 80px 80px, 100px 100px, 100px 100px;
+    }
+
+    .wrap {
+      width: min(var(--max), calc(100% - 88px));
+      margin: 0 auto;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: rgba(10, 15, 30, .96);
+      border-bottom: 1px solid var(--line);
+      box-shadow: 0 18px 45px rgba(0, 0, 0, .24);
+      backdrop-filter: blur(16px);
+    }
+
+    .nav {
+      height: 80px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 28px;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -.02em;
+    }
+
+    .brand-logo {
+      width: 136px;
+      height: auto;
+      object-fit: contain;
+      filter: drop-shadow(0 0 12px rgba(0, 230, 118, .16));
+    }
+
+    .logo-mark {
+      width: 38px;
+      height: 42px;
+      filter: drop-shadow(0 0 16px rgba(0, 230, 118, .22));
+    }
+
+    .links {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      color: var(--muted);
+      font-weight: 700;
+    }
+
+    .links a:not(.btn) {
+      position: relative;
+      transition: color .2s ease;
+    }
+
+    .links a:not(.btn):hover,
+    .links a.active { color: var(--green); }
+
+    .links a.active::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: -8px;
+      height: 2px;
+      background: var(--green);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 50px;
+      padding: 0 28px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(13, 21, 48, .8);
+      color: #fff;
+      font-weight: 800;
+      transition: transform .2s ease, border-color .2s ease, background .2s ease;
+    }
+
+    .btn:hover { transform: translateY(-2px); border-color: rgba(0, 230, 118, .6); }
+    .btn.primary {
+      background: var(--green);
+      border-color: var(--green);
+      color: #03130c;
+    }
+
+    .hero {
+      position: relative;
+      min-height: calc(100vh - 80px);
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 52% 46%, rgba(0, 230, 118, .14), transparent 34%),
+        linear-gradient(180deg, rgba(13, 21, 48, .45), transparent 30%),
+        var(--bg);
+    }
+
+    .hero::before,
+    .hero::after {
+      content: "";
+      position: absolute;
+      width: 520px;
+      height: 520px;
+      border: 1px solid rgba(0, 230, 118, .12);
+      transform: rotate(45deg);
+    }
+
+    .hero::before { right: -160px; top: -240px; }
+    .hero::after { left: -260px; bottom: -340px; }
+
+    .hero-inner {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 1.05fr .95fr;
+      align-items: center;
+      gap: 70px;
+      padding: 100px 0 92px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      color: var(--green);
+      border: 1px solid rgba(0, 230, 118, .45);
+      background: rgba(0, 230, 118, .08);
+      padding: 6px 15px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: var(--green);
+      box-shadow: 0 0 14px var(--green);
+    }
+
+    h1, h2, h3 {
+      font-family: "Space Grotesk", Inter, sans-serif;
+      margin: 0;
+      letter-spacing: -.035em;
+      line-height: .98;
+    }
+
+    h1 {
+      margin-top: 38px;
+      max-width: 720px;
+      font-size: clamp(54px, 7vw, 90px);
+    }
+
+    h1 span { color: var(--green); }
+
+    .lead {
+      max-width: 670px;
+      margin: 30px 0 36px;
+      color: var(--muted);
+      font-size: 20px;
+      line-height: 1.55;
+      font-weight: 500;
+    }
+
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 16px; }
+
+    .shield-stage {
+      display: grid;
+      place-items: center;
+      min-height: 520px;
+    }
+
+    .shield {
+      width: min(440px, 90%);
+      color: var(--green);
+      filter: drop-shadow(0 0 26px rgba(0, 230, 118, .20));
+    }
+
+    .stats {
+      position: relative;
+      z-index: 2;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 30px;
+      padding: 34px 0 92px;
+      border-top: 1px solid var(--line);
+    }
+
+    .stat strong {
+      display: block;
+      color: var(--green);
+      font-size: clamp(28px, 3vw, 42px);
+      font-family: "Space Grotesk", sans-serif;
+      line-height: 1;
+    }
+
+    .stat span {
+      display: block;
+      margin-top: 9px;
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    section { position: relative; padding: 110px 0; overflow: hidden; }
+    .section-alt { background-color: var(--panel); }
+    .section-dark { background-color: var(--bg); }
+
+    .kicker {
+      margin-bottom: 18px;
+      color: var(--green);
+      font-size: 13px;
+      font-weight: 900;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+    .kicker::before {
+      content: "";
+      display: block;
+      width: 48px;
+      height: 2px;
+      margin-bottom: 14px;
+      background: var(--green);
+    }
+
+    h2 {
+      max-width: 720px;
+      font-size: clamp(40px, 5vw, 62px);
+    }
+
+    .section-copy {
+      color: var(--soft);
+      max-width: 720px;
+      margin-top: 26px;
+      font-size: 18px;
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr .95fr;
+      gap: 70px;
+      align-items: center;
+    }
+
+    .terminal-list {
+      display: grid;
+      gap: 14px;
+    }
+
+    .terminal-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 18px 22px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #081020;
+      color: #c7d9f6;
+      font-family: var(--mono, "SF Mono", Consolas, monospace);
+      font-weight: 700;
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .015);
+    }
+
+    .terminal-row span:first-child::before {
+      content: "";
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      margin-right: 18px;
+      border-radius: 50%;
+      background: var(--green);
+    }
+
+    .terminal-row em {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: rgba(0, 230, 118, .55);
+      font-style: normal;
+    }
+
+    .services-head {
+      max-width: 720px;
+      margin-bottom: 66px;
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .service-card {
+      min-height: 255px;
+      padding: 24px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      transition: border-color .2s ease, transform .2s ease, box-shadow .2s ease;
+    }
+
+    .service-card.wide { grid-column: span 2; }
+    .service-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(0, 230, 118, .5);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, .26);
+    }
+
+    .icon-box {
+      width: 44px;
+      height: 44px;
+      display: grid;
+      place-items: center;
+      margin-bottom: 26px;
+      border-radius: 8px;
+      border: 1px solid rgba(0, 230, 118, .35);
+      background: rgba(0, 230, 118, .09);
+      color: var(--green);
+    }
+
+    .service-card h3 {
+      font-size: 22px;
+      line-height: 1.15;
+      letter-spacing: -.02em;
+    }
+
+    .service-card p {
+      margin: 20px 0 24px;
+      color: var(--soft);
+      font-size: 16px;
+    }
+
+    .learn {
+      color: var(--green);
+      font-size: 14px;
+      font-weight: 800;
+    }
+
+    .why-grid {
+      display: grid;
+      grid-template-columns: .85fr 1.15fr;
+      gap: 72px;
+      align-items: start;
+    }
+
+    .status-panel {
+      border: 1px solid rgba(0, 230, 118, .25);
+      border-radius: 10px;
+      background: #070d1a;
+      box-shadow: 0 28px 90px rgba(0, 0, 0, .34);
+      overflow: hidden;
+    }
+
+    .status-title {
+      padding: 18px 22px;
+      border-bottom: 1px solid var(--line);
+      color: var(--muted);
+      font-family: "SF Mono", Consolas, monospace;
+    }
+
+    .status-lines {
+      padding: 22px;
+      color: #c7d9f6;
+      font-family: "SF Mono", Consolas, monospace;
+      line-height: 2.1;
+    }
+
+    .status-lines b { color: var(--green); }
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 28px;
+    }
+
+    .feature h3 { font-size: 22px; margin: 0 0 12px; }
+    .feature p { margin: 0; color: var(--soft); }
+
+    .industries {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 56px;
+    }
+
+    .industry {
+      padding: 24px;
+      min-height: 118px;
+      display: flex;
+      align-items: end;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: linear-gradient(135deg, rgba(0, 230, 118, .10), rgba(13, 21, 48, .85));
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 22px;
+      font-weight: 700;
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: .85fr 1.15fr;
+      gap: 60px;
+      align-items: start;
+    }
+
+    .contact-card {
+      display: grid;
+      gap: 16px;
+      margin-top: 36px;
+    }
+
+    .contact-link {
+      display: flex;
+      gap: 14px;
+      align-items: center;
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(13, 21, 48, .75);
+    }
+
+    .contact-link small {
+      display: block;
+      color: var(--muted);
+      font-weight: 800;
+    }
+
+    .contact-link strong {
+      display: block;
+      margin-top: 2px;
+      color: #fff;
+    }
+
+    .contact-shell {
+      margin-top: 28px;
+      border: 1px solid rgba(0, 230, 118, .25);
+      border-radius: 8px;
+      background: #060b17;
+      color: #c7d9f6;
+      font-family: "SF Mono", Consolas, monospace;
+      overflow: hidden;
+    }
+
+    .shell-head {
+      padding: 13px 16px;
+      border-bottom: 1px solid var(--line);
+      color: var(--green);
+    }
+
+    .shell-body { padding: 18px; }
+    .shell-body b { color: var(--green); }
+
+    .form {
+      padding: 34px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+    }
+
+    .form h3 {
+      margin-bottom: 28px;
+      font-size: 30px;
+    }
+
+    .field { margin-bottom: 18px; }
+    .field label {
+      display: block;
+      margin-bottom: 8px;
+      color: #dbe8fb;
+      font-weight: 800;
+      font-size: 14px;
+    }
+
+    .field input,
+    .field textarea {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #091122;
+      color: #fff;
+      padding: 15px 16px;
+      outline: none;
+      transition: border-color .2s ease, box-shadow .2s ease;
+    }
+
+    .field textarea { min-height: 145px; resize: vertical; }
+    .field input:focus,
+    .field textarea:focus {
+      border-color: var(--green);
+      box-shadow: 0 0 0 3px rgba(0, 230, 118, .12);
+    }
+
+    footer {
+      padding: 72px 0 34px;
+      border-top: 1px solid var(--line);
+      background: #080d19;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.4fr .8fr 1fr .8fr;
+      gap: 58px;
+      margin-bottom: 52px;
+    }
+
+    .footer-grid p,
+    .footer-grid a,
+    .copyright {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .footer-grid h3 {
+      margin: 0 0 18px;
+      color: #fff;
+      font-size: 14px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+    .footer-grid ul { list-style: none; padding: 0; margin: 0; }
+    .footer-grid li + li { margin-top: 12px; }
+    .footer-grid a:hover { color: var(--green); }
+
+    .socials { display: flex; gap: 10px; margin-top: 22px; }
+    .socials a {
+      width: 36px;
+      height: 36px;
+      display: grid;
+      place-items: center;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+    }
+
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      padding-top: 28px;
+      border-top: 1px solid var(--line);
+    }
+
+    .footer-bottom div { display: flex; gap: 28px; }
+
+    .legal-section {
+      border-top: 1px solid var(--line);
+      background: #080d19;
+    }
+
+    .legal-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 34px;
+    }
+
+    .legal-card {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(13, 21, 48, .76);
+      padding: 30px;
+    }
+
+    .legal-card h2 {
+      font-size: clamp(30px, 3vw, 42px);
+      margin-bottom: 12px;
+    }
+
+    .legal-date {
+      margin: 0 0 24px;
+      color: var(--muted);
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    .legal-card h3 {
+      margin: 24px 0 10px;
+      font-size: 18px;
+      letter-spacing: 0;
+      line-height: 1.2;
+    }
+
+    .legal-card p,
+    .legal-card li {
+      color: var(--soft);
+      font-size: 15px;
+    }
+
+    .legal-card ul {
+      margin: 0;
+      padding-left: 20px;
+    }
+
+    @media (max-width: 900px) {
+      .wrap { width: min(100% - 36px, var(--max)); }
+      .nav { height: auto; padding: 18px 0; align-items: flex-start; }
+      .links { gap: 18px; flex-wrap: wrap; justify-content: flex-end; }
+      .links .btn { min-height: 42px; padding: 0 18px; }
+      .hero-inner,
+      .about-grid,
+      .why-grid,
+      .contact-grid,
+      .footer-grid {
+        grid-template-columns: 1fr;
+      }
+      .hero-inner { gap: 24px; padding: 58px 0 46px; }
+      .shield-stage { min-height: 320px; }
+      .stats,
+      .services-grid,
+      .features,
+      .industries {
+        grid-template-columns: 1fr;
+      }
+      .service-card.wide { grid-column: span 1; }
+      .legal-grid { grid-template-columns: 1fr; }
+      section { padding: 76px 0; }
+      .footer-bottom { flex-direction: column; }
+    }
+
+    @media (max-width: 560px) {
+      h1 { font-size: 46px; }
+      .brand { font-size: 18px; }
+      .brand-logo { width: 112px; }
+      .logo-mark { width: 32px; }
+      .links a:not(.btn) { display: none; }
+      .hero-actions { flex-direction: column; align-items: stretch; }
+      .stats { gap: 20px; }
+      .form { padding: 24px; }
+      .footer-bottom div { flex-wrap: wrap; gap: 14px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap nav">
+      <a class="brand" href="#home" aria-label="DProtect Home">
+        <img class="brand-logo" src="assets/dprotect-logo.png" alt="DProtect">
+      </a>
+      <nav class="links" aria-label="Primary navigation">
+        <a class="active" href="#home">Home</a>
+        <a href="#services">Services</a>
+        <a href="#about">About</a>
+        <a class="btn primary" href="#contact">Contact Us</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section id="home" class="hero grid-bg">
+      <div class="wrap">
+        <div class="hero-inner">
+          <div>
+            <div class="eyebrow">Secure Identity. Trusted Protection.</div>
+            <h1>Protecting Digital <span>Identity</span> with Confidence</h1>
+            <p class="lead">DProtect delivers innovative identity verification and security solutions that help businesses prevent fraud, authenticate users, and build lasting digital trust.</p>
+            <div class="hero-actions">
+              <a class="btn primary" href="#contact">Contact Us <span aria-hidden="true">-&gt;</span></a>
+              <a class="btn" href="#services">Learn More</a>
+            </div>
+          </div>
+          <div class="shield-stage">
+            <svg class="shield" viewBox="0 0 520 560" fill="none" aria-hidden="true">
+              <path d="M260 20 462 100v146c0 130-74 232-202 294C132 478 58 376 58 246V100L260 20Z" stroke="currentColor" stroke-width="4"/>
+              <path d="M260 62 418 124v125c0 101-57 183-158 236C159 432 102 350 102 249V124l158-62Z" stroke="currentColor" opacity=".38" stroke-width="2"/>
+              <path d="M260 184v-48M260 136v0M202 236l-45 45M318 236l45 45M202 236h116" stroke="currentColor" opacity=".65" stroke-width="3"/>
+              <circle cx="260" cy="136" r="8" fill="currentColor"/>
+              <circle cx="202" cy="236" r="7" fill="currentColor"/>
+              <circle cx="318" cy="236" r="7" fill="currentColor"/>
+              <circle cx="157" cy="281" r="7" fill="currentColor"/>
+              <circle cx="363" cy="281" r="7" fill="currentColor"/>
+              <circle cx="260" cy="330" r="74" stroke="currentColor" opacity=".45"/>
+              <rect x="230" y="306" width="60" height="54" rx="8" stroke="currentColor" stroke-width="5"/>
+              <path d="M240 306v-18a20 20 0 0 1 40 0v18" stroke="currentColor" stroke-width="5"/>
+              <circle cx="260" cy="334" r="8" fill="currentColor"/>
+              <path d="M260 342v12" stroke="currentColor" stroke-width="5"/>
+              <g opacity=".35" fill="currentColor">
+                <circle cx="157" cy="380" r="4"/><circle cx="198" cy="408" r="4"/><circle cx="260" cy="421" r="4"/>
+                <circle cx="322" cy="408" r="4"/><circle cx="363" cy="380" r="4"/><circle cx="120" cy="345" r="4"/>
+                <circle cx="400" cy="345" r="4"/><circle cx="220" cy="450" r="3"/><circle cx="300" cy="450" r="3"/>
+              </g>
+            </svg>
+          </div>
+        </div>
+        <div class="stats">
+          <div class="stat"><strong>99.9%</strong><span>Uptime SLA</span></div>
+          <div class="stat"><strong>500+</strong><span>Integrations</span></div>
+          <div class="stat"><strong>256-bit</strong><span>Encryption</span></div>
+          <div class="stat"><strong>24/7</strong><span>Security Monitoring</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="about" class="section-alt grid-bg">
+      <div class="wrap about-grid">
+        <div>
+          <div class="kicker">About DProtect</div>
+          <h2>Built for the Modern Threat Landscape</h2>
+          <p class="section-copy">DProtect is a cybersecurity startup on a mission to make digital identity secure, verifiable, and trustworthy. We develop cutting-edge technologies that empower organizations to verify identities with precision, detect fraud in real time, and build resilient security architectures that scale with their business.</p>
+          <p class="section-copy">Founded by experienced security engineers, we combine deep technical expertise with a relentless focus on privacy and compliance &mdash; delivering solutions that meet the demands of today's most security-conscious industries.</p>
+        </div>
+        <div class="terminal-list">
+          <div class="terminal-row"><span>Identity Verification</span><em></em></div>
+          <div class="terminal-row"><span>Digital Identity</span><em></em></div>
+          <div class="terminal-row"><span>Fraud Detection</span><em></em></div>
+          <div class="terminal-row"><span>Authentication</span><em></em></div>
+          <div class="terminal-row"><span>Security Consulting</span><em></em></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="services" class="section-dark grid-bg">
+      <div class="wrap">
+        <div class="services-head">
+          <div class="kicker">Our Services</div>
+          <h2>End-to-End Security Solutions</h2>
+          <p class="section-copy">From identity verification to custom security architectures, we provide the full spectrum of digital protection services your organization needs.</p>
+        </div>
+        <div class="services-grid">
+          <article class="service-card">
+            <div class="icon-box">ID</div>
+            <h3>Identity Verification</h3>
+            <p>Real-time document verification, biometric matching, and liveness detection to confirm user identities with enterprise-grade accuracy.</p>
+            <a class="learn" href="#contact">Learn more &nbsp;-&gt;</a>
+          </article>
+          <article class="service-card wide">
+            <div class="icon-box">SH</div>
+            <h3>Fraud Detection</h3>
+            <p>AI-powered behavioral analytics and anomaly detection that identify fraudulent activity before it impacts your business.</p>
+            <a class="learn" href="#contact">Learn more &nbsp;-&gt;</a>
+          </article>
+          <article class="service-card">
+            <div class="icon-box">KY</div>
+            <h3>Authentication Solutions</h3>
+            <p>Multi-factor authentication, passwordless login, and adaptive access controls that balance security with seamless user experience.</p>
+            <a class="learn" href="#contact">Learn more &nbsp;-&gt;</a>
+          </article>
+          <article class="service-card">
+            <div class="icon-box">QA</div>
+            <h3>Security Consulting</h3>
+            <p>Expert security assessments, architecture reviews, and compliance guidance to strengthen your organization's security posture.</p>
+            <a class="learn" href="#contact">Learn more &nbsp;-&gt;</a>
+          </article>
+          <article class="service-card">
+            <div class="icon-box">&lt;/&gt;</div>
+            <h3>API &amp; System Integration</h3>
+            <p>Flexible REST APIs and SDKs that integrate seamlessly with your existing infrastructure, enabling rapid deployment at scale.</p>
+            <a class="learn" href="#contact">Learn more &nbsp;-&gt;</a>
+          </article>
+          <article class="service-card">
+            <div class="icon-box">IO</div>
+            <h3>Custom Security Solutions</h3>
+            <p>Bespoke security architectures designed around your unique requirements, threat model, and compliance obligations.</p>
+            <a class="learn" href="#contact">Learn more &nbsp;-&gt;</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-alt grid-bg">
+      <div class="wrap why-grid">
+        <div>
+          <div class="kicker">Why DProtect</div>
+          <h2>Security that doesn't compromise on performance or trust.</h2>
+          <div class="status-panel">
+            <div class="status-title">system.status</div>
+            <div class="status-lines">
+              <div><b>✓</b> Threat detection: ACTIVE</div>
+              <div><b>✓</b> Identity layer: SECURED</div>
+              <div><b>✓</b> Fraud engine: RUNNING</div>
+              <div><b>✓</b> Compliance: VERIFIED</div>
+            </div>
+          </div>
+        </div>
+        <div class="features">
+          <div class="feature"><h3>Security-first approach</h3><p>Every product decision starts with security. We build protection in from the ground up, not as an afterthought.</p></div>
+          <div class="feature"><h3>Innovative technology</h3><p>We leverage the latest advances in AI, cryptography, and behavioral analytics to stay ahead of evolving threats.</p></div>
+          <div class="feature"><h3>Privacy by design</h3><p>Data minimization and privacy principles are embedded into our architecture, ensuring compliance with global regulations.</p></div>
+          <div class="feature"><h3>Reliable and scalable</h3><p>Our infrastructure is built for enterprise scale &mdash; handling millions of verifications with 99.9% uptime guarantees.</p></div>
+          <div class="feature"><h3>Experienced engineering team</h3><p>Our team brings decades of combined experience in cybersecurity, identity systems, and enterprise software.</p></div>
+          <div class="feature"><h3>Customer-focused support</h3><p>Dedicated security engineers and 24/7 support ensure your team is never left without expert guidance.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-dark grid-bg">
+      <div class="wrap">
+        <div class="kicker">Industries We Serve</div>
+        <h2>Trusted Across Critical Sectors</h2>
+        <p class="section-copy">DProtect's solutions are purpose-built for industries where identity security and fraud prevention are mission-critical.</p>
+        <div class="industries">
+          <div class="industry">Banking &amp; Financial Services</div>
+          <div class="industry">FinTech</div>
+          <div class="industry">Government</div>
+          <div class="industry">Healthcare</div>
+          <div class="industry">E-commerce</div>
+          <div class="industry">Enterprise Businesses</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="section-alt grid-bg">
+      <div class="wrap contact-grid">
+        <div>
+          <div class="kicker">Get In Touch</div>
+          <h2>Ready to Secure Your Digital Identity?</h2>
+          <p class="section-copy">Talk to our security experts and discover how DProtect can protect your organization from modern cyber threats.</p>
+          <div class="contact-card">
+            <a class="contact-link" href="tel:+201557305883"><span class="icon-box">PH</span><span><small>Phone</small><strong>+20 155 730 5883</strong></span></a>
+            <a class="contact-link" href="mailto:help@dprotect.me"><span class="icon-box">EM</span><span><small>Email</small><strong>help@dprotect.me</strong></span></a>
+          </div>
+          <div class="contact-shell">
+            <div class="shell-head">secure-channel.sh</div>
+            <div class="shell-body">
+              <div>$ init secure_connection</div>
+              <div><b>✓</b> TLS 1.3 handshake complete</div>
+              <div>$ await response...</div>
+              <div>_</div>
+            </div>
+          </div>
+        </div>
+        <form class="form" action="mailto:help@dprotect.me" method="post" enctype="text/plain">
+          <h3>Send Us a Message</h3>
+          <div class="field"><label for="name">Full Name *</label><input id="name" name="name" autocomplete="name"></div>
+          <div class="field"><label for="email">Email Address *</label><input id="email" name="email" type="email" autocomplete="email"></div>
+          <div class="field"><label for="company">Company</label><input id="company" name="company" autocomplete="organization"></div>
+          <div class="field"><label for="message">Message *</label><textarea id="message" name="message"></textarea></div>
+          <button class="btn primary" type="submit">Send Message</button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <section id="legal" class="legal-section">
+    <div class="wrap legal-grid">
+      <article id="privacy" class="legal-card">
+        <h2>Privacy Policy</h2>
+        <p class="legal-date">Effective date: July 14, 2026</p>
+        <p>DProtect respects your privacy. This policy explains how we collect, use, and protect information submitted through this website and during business conversations with our team.</p>
+
+        <h3>Information We Collect</h3>
+        <p>We may collect contact details such as your name, email address, phone number, company name, and message content when you contact us or request information about our services.</p>
+
+        <h3>How We Use Information</h3>
+        <ul>
+          <li>To respond to inquiries and provide requested information.</li>
+          <li>To discuss, deliver, improve, and support DProtect services.</li>
+          <li>To maintain website security, prevent abuse, and protect our business.</li>
+          <li>To comply with applicable legal, regulatory, or contractual obligations.</li>
+        </ul>
+
+        <h3>Sharing Information</h3>
+        <p>We do not sell personal information. We may share information with trusted service providers, professional advisers, or authorities when necessary to operate our services, protect rights and security, or comply with the law.</p>
+
+        <h3>Data Security and Retention</h3>
+        <p>We use reasonable technical and organizational measures to protect information. We keep information only as long as needed for business, security, legal, or compliance purposes.</p>
+
+        <h3>Your Choices</h3>
+        <p>You may contact us to request access, correction, or deletion of personal information, subject to applicable law and legitimate business requirements.</p>
+
+        <h3>Contact</h3>
+        <p>For privacy questions, email <a href="mailto:help@dprotect.me">help@dprotect.me</a>.</p>
+      </article>
+
+      <article id="terms" class="legal-card">
+        <h2>Terms of Service</h2>
+        <p class="legal-date">Effective date: July 14, 2026</p>
+        <p>These terms govern your use of the DProtect website and any related information we make available through it. By using this website, you agree to these terms.</p>
+
+        <h3>Website Use</h3>
+        <p>You may use this website for lawful business and informational purposes only. You must not interfere with website security, attempt unauthorized access, or misuse any content or forms.</p>
+
+        <h3>Service Information</h3>
+        <p>Descriptions of DProtect services are provided for general information. Specific service scope, pricing, support, security obligations, and commercial terms are governed by a separate written agreement.</p>
+
+        <h3>Intellectual Property</h3>
+        <p>The DProtect name, branding, website design, text, graphics, and related materials are owned by DProtect or its licensors. You may not copy, modify, or reuse them without permission except as allowed by law.</p>
+
+        <h3>No Warranties</h3>
+        <p>This website is provided on an "as is" and "as available" basis. We aim to keep information accurate and available, but we do not guarantee that the website will be uninterrupted, error-free, or complete.</p>
+
+        <h3>Limitation of Liability</h3>
+        <p>To the fullest extent permitted by law, DProtect is not liable for indirect, incidental, consequential, special, or punitive damages arising from use of this website.</p>
+
+        <h3>Changes</h3>
+        <p>We may update these terms from time to time. Updated terms will be posted on this page with a revised effective date.</p>
+
+        <h3>Contact</h3>
+        <p>For questions about these terms, email <a href="mailto:help@dprotect.me">help@dprotect.me</a>.</p>
+      </article>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap">
+      <div class="footer-grid">
+        <div>
+          <a class="brand" href="#home">
+            <img class="brand-logo" src="assets/dprotect-logo.png" alt="DProtect">
+          </a>
+          <p>Secure Identity. Trusted Protection. Delivering innovative identity verification and security solutions that help businesses prevent fraud and build trust.</p>
+          <!-- Social profiles are hidden until DProtect's LinkedIn, X, and GitHub pages are created.
+          <div class="socials"><a href="https://linkedin.com/">in</a><a href="https://twitter.com/">X</a><a href="https://github.com/">GH</a></div>
+          -->
+        </div>
+        <div><h3>Quick Links</h3><ul><li><a href="#home">Home</a></li><li><a href="#services">Services</a></li><li><a href="#about">About</a></li><li><a href="#contact">Contact</a></li></ul></div>
+        <div><h3>Contact</h3><ul><li><a href="tel:+201557305883">+20 155 730 5883</a></li><li><a href="mailto:help@dprotect.me">help@dprotect.me</a></li></ul></div>
+        <div><h3>Legal</h3><ul><li><a href="#privacy">Privacy Policy</a></li><li><a href="#terms">Terms of Service</a></li></ul></div>
+      </div>
+      <div class="footer-bottom">
+        <span class="copyright">&copy; 2026 DProtect. All rights reserved.</span>
+        <div><a class="copyright" href="#privacy">Privacy Policy</a><a class="copyright" href="#terms">Terms of Service</a></div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.querySelector(".form").addEventListener("submit", function (event) {
+      event.preventDefault();
+      const form = event.currentTarget;
+      const data = new FormData(form);
+      const name = data.get("name") || "";
+      const email = data.get("email") || "";
+      const company = data.get("company") || "";
+      const message = data.get("message") || "";
+      const subject = encodeURIComponent("DProtect website message" + (name ? " from " + name : ""));
+      const body = encodeURIComponent(
+        "Full Name: " + name + "\n" +
+        "Email Address: " + email + "\n" +
+        "Company: " + company + "\n\n" +
+        "Message:\n" + message
+      );
+
+      window.location.href = "mailto:help@dprotect.me?subject=" + subject + "&body=" + body;
+    });
+  </script>
+</body>
+</html>
