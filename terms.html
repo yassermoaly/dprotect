@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Terms of Service - DProtect</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0a0f1e;
+      --panel: #0d1530;
+      --line: #1e2a45;
+      --muted: #94a3b8;
+      --soft: #b7cff0;
+      --text: #f8fafc;
+      --green: #00e676;
+      --max: 960px;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.65;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    .grid-bg {
+      min-height: 100vh;
+      background-image:
+        radial-gradient(circle at 50% 50%, rgba(0, 230, 118, .08) 0 1px, transparent 1px),
+        linear-gradient(rgba(0, 230, 118, .035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 230, 118, .035) 1px, transparent 1px);
+      background-size: 80px 80px, 100px 100px, 100px 100px;
+    }
+
+    .wrap {
+      width: min(var(--max), calc(100% - 40px));
+      margin: 0 auto;
+      padding: 34px 0 72px;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      margin-bottom: 46px;
+    }
+
+    .brand-logo {
+      width: 136px;
+      height: auto;
+      object-fit: contain;
+      filter: drop-shadow(0 0 12px rgba(0, 230, 118, .16));
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 46px;
+      padding: 0 20px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(13, 21, 48, .8);
+      color: #fff;
+      font-weight: 800;
+      transition: transform .2s ease, border-color .2s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      border-color: rgba(0, 230, 118, .6);
+    }
+
+    .legal-card {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(13, 21, 48, .86);
+      padding: clamp(24px, 5vw, 44px);
+      box-shadow: 0 24px 70px rgba(0, 0, 0, .25);
+    }
+
+    .kicker {
+      margin-bottom: 14px;
+      color: var(--green);
+      font-size: 13px;
+      font-weight: 900;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+    h1, h2 {
+      font-family: "Space Grotesk", Inter, sans-serif;
+      margin: 0;
+      letter-spacing: -.03em;
+      line-height: 1;
+    }
+
+    h1 {
+      font-size: clamp(42px, 7vw, 68px);
+      margin-bottom: 12px;
+    }
+
+    .date {
+      margin: 0 0 30px;
+      color: var(--muted);
+      font-weight: 700;
+    }
+
+    h2 {
+      margin: 30px 0 10px;
+      font-size: 24px;
+    }
+
+    p { color: var(--soft); }
+    .legal-card a:not(.btn) { color: var(--green); font-weight: 800; }
+    .actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 34px; }
+
+    @media (max-width: 560px) {
+      header { align-items: flex-start; flex-direction: column; }
+      .brand-logo { width: 112px; }
+      .btn { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <div class="grid-bg">
+    <div class="wrap">
+      <header>
+        <a href="index.html" aria-label="DProtect Home"><img class="brand-logo" src="assets/dprotect-logo.png" alt="DProtect"></a>
+        <a class="btn" href="index.html">Back to Home</a>
+      </header>
+
+      <main class="legal-card">
+        <div class="kicker">Legal</div>
+        <h1>Terms of Service</h1>
+        <p class="date">Effective date: July 14, 2026</p>
+        <p>These terms govern your use of the DProtect website and any related information we make available through it. By using this website, you agree to these terms.</p>
+
+        <h2>Website Use</h2>
+        <p>You may use this website for lawful business and informational purposes only. You must not interfere with website security, attempt unauthorized access, or misuse any content or forms.</p>
+
+        <h2>Service Information</h2>
+        <p>Descriptions of DProtect services are provided for general information. Specific service scope, pricing, support, security obligations, and commercial terms are governed by a separate written agreement.</p>
+
+        <h2>Intellectual Property</h2>
+        <p>The DProtect name, branding, website design, text, graphics, and related materials are owned by DProtect or its licensors. You may not copy, modify, or reuse them without permission except as allowed by law.</p>
+
+        <h2>No Warranties</h2>
+        <p>This website is provided on an "as is" and "as available" basis. We aim to keep information accurate and available, but we do not guarantee that the website will be uninterrupted, error-free, or complete.</p>
+
+        <h2>Limitation of Liability</h2>
+        <p>To the fullest extent permitted by law, DProtect is not liable for indirect, incidental, consequential, special, or punitive damages arising from use of this website.</p>
+
+        <h2>Changes</h2>
+        <p>We may update these terms from time to time. Updated terms will be posted on this page with a revised effective date.</p>
+
+        <h2>Contact</h2>
+        <p>For questions about these terms, email <a href="mailto:help@dprotect.me">help@dprotect.me</a>.</p>
+
+        <div class="actions">
+          <a class="btn" href="index.html">Back to Home</a>
+          <a class="btn" href="privacy.html">Privacy Policy</a>
+        </div>
+      </main>
+    </div>
+  </div>
+</body>
+</html>

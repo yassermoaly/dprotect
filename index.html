@@ -96,6 +96,36 @@
       font-weight: 700;
     }
 
+    .menu-toggle {
+      -webkit-appearance: none;
+      appearance: none;
+      display: none;
+      width: 44px;
+      height: 44px;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(13, 21, 48, .9);
+      color: var(--text);
+      cursor: pointer;
+    }
+
+    .menu-toggle .menu-line {
+      display: block;
+      width: 20px;
+      height: 2px;
+      border-radius: 2px;
+      background: currentColor;
+      transition: transform .2s ease, opacity .2s ease;
+    }
+
+    .menu-toggle[aria-expanded="true"] .menu-line:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .menu-toggle[aria-expanded="true"] .menu-line:nth-child(2) { opacity: 0; }
+    .menu-toggle[aria-expanded="true"] .menu-line:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
     .links a:not(.btn) {
       position: relative;
       transition: color .2s ease;
@@ -487,25 +517,6 @@
       color: #fff;
     }
 
-    .contact-shell {
-      margin-top: 28px;
-      border: 1px solid rgba(0, 230, 118, .25);
-      border-radius: 8px;
-      background: #060b17;
-      color: #c7d9f6;
-      font-family: "SF Mono", Consolas, monospace;
-      overflow: hidden;
-    }
-
-    .shell-head {
-      padding: 13px 16px;
-      border-bottom: 1px solid var(--line);
-      color: var(--green);
-    }
-
-    .shell-body { padding: 18px; }
-    .shell-body b { color: var(--green); }
-
     .form {
       padding: 34px;
       border: 1px solid var(--line);
@@ -599,59 +610,31 @@
 
     .footer-bottom div { display: flex; gap: 28px; }
 
-    .legal-section {
-      border-top: 1px solid var(--line);
-      background: #080d19;
-    }
-
-    .legal-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 34px;
-    }
-
-    .legal-card {
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      background: rgba(13, 21, 48, .76);
-      padding: 30px;
-    }
-
-    .legal-card h2 {
-      font-size: clamp(30px, 3vw, 42px);
-      margin-bottom: 12px;
-    }
-
-    .legal-date {
-      margin: 0 0 24px;
-      color: var(--muted);
-      font-weight: 700;
-      font-size: 14px;
-    }
-
-    .legal-card h3 {
-      margin: 24px 0 10px;
-      font-size: 18px;
-      letter-spacing: 0;
-      line-height: 1.2;
-    }
-
-    .legal-card p,
-    .legal-card li {
-      color: var(--soft);
-      font-size: 15px;
-    }
-
-    .legal-card ul {
-      margin: 0;
-      padding-left: 20px;
-    }
-
     @media (max-width: 900px) {
       .wrap { width: min(100% - 36px, var(--max)); }
-      .nav { height: auto; padding: 18px 0; align-items: flex-start; }
-      .links { gap: 18px; flex-wrap: wrap; justify-content: flex-end; }
-      .links .btn { min-height: 42px; padding: 0 18px; }
+      .nav { height: auto; min-height: 76px; padding: 16px 0; align-items: center; flex-wrap: wrap; }
+      .menu-toggle { display: inline-flex; }
+      .links {
+        order: 3;
+        width: 100%;
+        display: none;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+        padding: 14px 0 4px;
+      }
+      .links.open { display: flex; }
+      .links a {
+        min-height: 44px;
+        display: flex;
+        align-items: center;
+        padding: 0 14px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: rgba(13, 21, 48, .68);
+      }
+      .links a.active::after { display: none; }
+      .links .btn { min-height: 46px; padding: 0 18px; }
       .hero-inner,
       .about-grid,
       .why-grid,
@@ -668,7 +651,6 @@
         grid-template-columns: 1fr;
       }
       .service-card.wide { grid-column: span 1; }
-      .legal-grid { grid-template-columns: 1fr; }
       section { padding: 76px 0; }
       .footer-bottom { flex-direction: column; }
     }
@@ -678,7 +660,6 @@
       .brand { font-size: 18px; }
       .brand-logo { width: 112px; }
       .logo-mark { width: 32px; }
-      .links a:not(.btn) { display: none; }
       .hero-actions { flex-direction: column; align-items: stretch; }
       .stats { gap: 20px; }
       .form { padding: 24px; }
@@ -692,7 +673,12 @@
       <a class="brand" href="#home" aria-label="DProtect Home">
         <img class="brand-logo" src="assets/dprotect-logo.png" alt="DProtect">
       </a>
-      <nav class="links" aria-label="Primary navigation">
+      <button class="menu-toggle" type="button" aria-label="Toggle menu" aria-controls="primary-menu" aria-expanded="false">
+        <span class="menu-line" aria-hidden="true"></span>
+        <span class="menu-line" aria-hidden="true"></span>
+        <span class="menu-line" aria-hidden="true"></span>
+      </button>
+      <nav class="links" id="primary-menu" aria-label="Primary navigation">
         <a class="active" href="#home">Home</a>
         <a href="#services">Services</a>
         <a href="#about">About</a>
@@ -864,15 +850,6 @@
             <a class="contact-link" href="tel:+201557305883"><span class="icon-box">PH</span><span><small>Phone</small><strong>+20 155 730 5883</strong></span></a>
             <a class="contact-link" href="mailto:help@dprotect.me"><span class="icon-box">EM</span><span><small>Email</small><strong>help@dprotect.me</strong></span></a>
           </div>
-          <div class="contact-shell">
-            <div class="shell-head">secure-channel.sh</div>
-            <div class="shell-body">
-              <div>$ init secure_connection</div>
-              <div><b>✓</b> TLS 1.3 handshake complete</div>
-              <div>$ await response...</div>
-              <div>_</div>
-            </div>
-          </div>
         </div>
         <form class="form" action="mailto:help@dprotect.me" method="post" enctype="text/plain">
           <h3>Send Us a Message</h3>
@@ -885,66 +862,6 @@
       </div>
     </section>
   </main>
-
-  <section id="legal" class="legal-section">
-    <div class="wrap legal-grid">
-      <article id="privacy" class="legal-card">
-        <h2>Privacy Policy</h2>
-        <p class="legal-date">Effective date: July 14, 2026</p>
-        <p>DProtect respects your privacy. This policy explains how we collect, use, and protect information submitted through this website and during business conversations with our team.</p>
-
-        <h3>Information We Collect</h3>
-        <p>We may collect contact details such as your name, email address, phone number, company name, and message content when you contact us or request information about our services.</p>
-
-        <h3>How We Use Information</h3>
-        <ul>
-          <li>To respond to inquiries and provide requested information.</li>
-          <li>To discuss, deliver, improve, and support DProtect services.</li>
-          <li>To maintain website security, prevent abuse, and protect our business.</li>
-          <li>To comply with applicable legal, regulatory, or contractual obligations.</li>
-        </ul>
-
-        <h3>Sharing Information</h3>
-        <p>We do not sell personal information. We may share information with trusted service providers, professional advisers, or authorities when necessary to operate our services, protect rights and security, or comply with the law.</p>
-
-        <h3>Data Security and Retention</h3>
-        <p>We use reasonable technical and organizational measures to protect information. We keep information only as long as needed for business, security, legal, or compliance purposes.</p>
-
-        <h3>Your Choices</h3>
-        <p>You may contact us to request access, correction, or deletion of personal information, subject to applicable law and legitimate business requirements.</p>
-
-        <h3>Contact</h3>
-        <p>For privacy questions, email <a href="mailto:help@dprotect.me">help@dprotect.me</a>.</p>
-      </article>
-
-      <article id="terms" class="legal-card">
-        <h2>Terms of Service</h2>
-        <p class="legal-date">Effective date: July 14, 2026</p>
-        <p>These terms govern your use of the DProtect website and any related information we make available through it. By using this website, you agree to these terms.</p>
-
-        <h3>Website Use</h3>
-        <p>You may use this website for lawful business and informational purposes only. You must not interfere with website security, attempt unauthorized access, or misuse any content or forms.</p>
-
-        <h3>Service Information</h3>
-        <p>Descriptions of DProtect services are provided for general information. Specific service scope, pricing, support, security obligations, and commercial terms are governed by a separate written agreement.</p>
-
-        <h3>Intellectual Property</h3>
-        <p>The DProtect name, branding, website design, text, graphics, and related materials are owned by DProtect or its licensors. You may not copy, modify, or reuse them without permission except as allowed by law.</p>
-
-        <h3>No Warranties</h3>
-        <p>This website is provided on an "as is" and "as available" basis. We aim to keep information accurate and available, but we do not guarantee that the website will be uninterrupted, error-free, or complete.</p>
-
-        <h3>Limitation of Liability</h3>
-        <p>To the fullest extent permitted by law, DProtect is not liable for indirect, incidental, consequential, special, or punitive damages arising from use of this website.</p>
-
-        <h3>Changes</h3>
-        <p>We may update these terms from time to time. Updated terms will be posted on this page with a revised effective date.</p>
-
-        <h3>Contact</h3>
-        <p>For questions about these terms, email <a href="mailto:help@dprotect.me">help@dprotect.me</a>.</p>
-      </article>
-    </div>
-  </section>
 
   <footer>
     <div class="wrap">
@@ -960,16 +877,31 @@
         </div>
         <div><h3>Quick Links</h3><ul><li><a href="#home">Home</a></li><li><a href="#services">Services</a></li><li><a href="#about">About</a></li><li><a href="#contact">Contact</a></li></ul></div>
         <div><h3>Contact</h3><ul><li><a href="tel:+201557305883">+20 155 730 5883</a></li><li><a href="mailto:help@dprotect.me">help@dprotect.me</a></li></ul></div>
-        <div><h3>Legal</h3><ul><li><a href="#privacy">Privacy Policy</a></li><li><a href="#terms">Terms of Service</a></li></ul></div>
+        <div><h3>Legal</h3><ul><li><a href="privacy.html">Privacy Policy</a></li><li><a href="terms.html">Terms of Service</a></li></ul></div>
       </div>
       <div class="footer-bottom">
         <span class="copyright">&copy; 2026 DProtect. All rights reserved.</span>
-        <div><a class="copyright" href="#privacy">Privacy Policy</a><a class="copyright" href="#terms">Terms of Service</a></div>
+        <div><a class="copyright" href="privacy.html">Privacy Policy</a><a class="copyright" href="terms.html">Terms of Service</a></div>
       </div>
     </div>
   </footer>
 
   <script>
+    const menuToggle = document.querySelector(".menu-toggle");
+    const primaryMenu = document.querySelector("#primary-menu");
+
+    menuToggle.addEventListener("click", function () {
+      const isOpen = primaryMenu.classList.toggle("open");
+      menuToggle.setAttribute("aria-expanded", String(isOpen));
+    });
+
+    primaryMenu.querySelectorAll("a").forEach(function (link) {
+      link.addEventListener("click", function () {
+        primaryMenu.classList.remove("open");
+        menuToggle.setAttribute("aria-expanded", "false");
+      });
+    });
+
     document.querySelector(".form").addEventListener("submit", function (event) {
       event.preventDefault();
       const form = event.currentTarget;
