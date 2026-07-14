@@ -261,31 +261,6 @@
       filter: drop-shadow(0 0 26px rgba(0, 230, 118, .20));
     }
 
-    .stats {
-      position: relative;
-      z-index: 2;
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 30px;
-      padding: 34px 0 92px;
-      border-top: 1px solid var(--line);
-    }
-
-    .stat strong {
-      display: block;
-      color: var(--green);
-      font-size: clamp(28px, 3vw, 42px);
-      font-family: "Space Grotesk", sans-serif;
-      line-height: 1;
-    }
-
-    .stat span {
-      display: block;
-      margin-top: 9px;
-      color: var(--muted);
-      font-weight: 600;
-    }
-
     section { position: relative; padding: 110px 0; overflow: hidden; }
     .section-alt { background-color: var(--panel); }
     .section-dark { background-color: var(--bg); }
@@ -644,7 +619,6 @@
       }
       .hero-inner { gap: 24px; padding: 58px 0 46px; }
       .shield-stage { min-height: 320px; }
-      .stats,
       .services-grid,
       .features,
       .industries {
@@ -661,7 +635,6 @@
       .brand-logo { width: 112px; }
       .logo-mark { width: 32px; }
       .hero-actions { flex-direction: column; align-items: stretch; }
-      .stats { gap: 20px; }
       .form { padding: 24px; }
       .footer-bottom div { flex-wrap: wrap; gap: 14px; }
     }
@@ -722,12 +695,6 @@
               </g>
             </svg>
           </div>
-        </div>
-        <div class="stats">
-          <div class="stat"><strong>99.9%</strong><span>Uptime SLA</span></div>
-          <div class="stat"><strong>500+</strong><span>Integrations</span></div>
-          <div class="stat"><strong>256-bit</strong><span>Encryption</span></div>
-          <div class="stat"><strong>24/7</strong><span>Security Monitoring</span></div>
         </div>
       </div>
     </section>
